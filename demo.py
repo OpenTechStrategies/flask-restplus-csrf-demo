@@ -94,19 +94,15 @@ class TokenApiHandler(ForcePost):
     def post(self):
         if not session.get('logged_in', False):
             ret = {'message': False}
-            if app.debug:
-                ret['reason'] = "No login session."
             return ret, 403
 
         username = session.get('username', '')
         if not username:
             # Shouldn't be possible to get here, but just in case
             ret = {'message': False}
-            if app.debug:
-                ret['reason'] = "No username"
             return ret, 403
 
-        valid = api.csrfHandler.token_valid_p(request.values.get('csrf', ''), username)
+        valid = api.csrfHandler.token_valid(request.values.get('csrf', ''), username)
         ret = {'message': valid}
         return ret
 
@@ -129,7 +125,7 @@ class LoginHandler(Resource):
         if process_login():
             ret = {
                 'message': 'Login success',
-                'csrf':api.csrfHandler.generate_token(username)
+                'csrf':api.csrfHandler.generate_token()
             }
             return ret
         else:
