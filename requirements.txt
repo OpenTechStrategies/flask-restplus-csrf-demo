@@ -1,0 +1,8 @@
+#flask-restplus-csrf==0.12.1a
+flask==1.1.1
+aniso8601==8.0.0
+pytz==2019.3
+jsonschema==3.2.0
+flask-sqlalchemy==2.4.1
+flask-login==0.4.1
+pycryptodome==3.9.4

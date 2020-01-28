@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="jumbo">
+    <h2>Welcome to the Flask app</h2>
+	{% if message is defined %}
+	<font color="red">{{ message }}</font>
+	{% endif %}
+	{% if session.logged_in %}
+	<p>You are currently logged in as {{ session.username }}.</p>
+	{% endif %}
+	<p>Here are some links:
+	  <ul>
+	    <li><a href="/web">Home</a></li>
+	    {% if session.logged_in %}
+	    <li><a href="logout">Logout</a></li>
+	    {% endif %}
+	    </ul>
+	</p>
+	{% if not session.logged_in %}
+	<h3>Login Form</h3>
+	<form method="post" action="/web/login">
+	  <input type="text" name="username" />
+	  <input type="password" name="passphrase" />
+	  <input type="submit" />
+	</form>
+	{% endif %}
+	
+	<h3>Get secure info</h3>
+	<form method="post" action="/web/secure">
+	  <input type="submit" />
+	</form>
+  </div>
+{% endblock %}
+  
