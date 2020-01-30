@@ -1,19 +1,20 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3.7
 
 """./demo.py, then point your browser at localhost:5000/web
 
 Note that this demo uses a fairly simple implementation of login, as the goal
 is to demo the CSRF functionality, not the session management.  Your
-implementation might be using oauth rather than cookie-based logins, and that
+implementation might be using OAuth rather than cookie-based logins, and that
 is fine.  As long as your session management generates a unique, ephemeral
-identity (such as a session id or an oauth bearer token),
+identity (such as a session id or an OAuth bearer token), code similar
+to this demo should work.
 
-There are two types of pages returned from this demo.  We return json
+There are two types of pages returned from this demo.  We return JSON
 from the /api/ urls and we return web pages from the /web/ urls.  The
-/api/ json is handled by the flask-restplus api object. The /web/ urls
-are handled by the traditional flask App.  We return the csrf token
-for api calls that themselves require the token.  We add the csrf
-token to all /web/ pages if the user is logged in.
+/api/ JSON is handled by the flask-restplus-csrf api object. The /web/ 
+urls are handled by the traditional flask App.  We return the CSRF 
+token for API calls that themselves require the token.  We add the
+CSRF token to all /web/ pages if the user is logged in.
 
 The /web/ urls get the token added to the head of the document.  If
 you look in the template, you'll see that pages call csrf.js, which
@@ -46,7 +47,7 @@ app.debug = True
 # restarts of the server.
 app.secret_key = os.urandom(32)  # 256-bit random encryption key
 
-## We call Api with a csrf=True paramter.  We could alternatively pass
+## We call Api with a csrf=True parameter.  We could alternatively pass
 ## a csrf instance (subclassed or otherwise) as the value of parameter
 ## csrf.  This would allow us to, for example, change how usernames
 ## are stored by overriding get_username.  See csrf.py for more.
@@ -84,7 +85,7 @@ def process_login():
     
 # This just tells us if we're logged in
 @api.route('/api/logged_in')
-class LogedInApiHandler(Resource):
+class LoggedInApiHandler(Resource):
     def get(self):
         return {'message': session.get('logged_in', False)}
 
