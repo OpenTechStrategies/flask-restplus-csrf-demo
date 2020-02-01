@@ -103,7 +103,7 @@ class TokenApiHandler(ForcePost):
             ret = {'message': False}
             return ret, 403
 
-        valid = api.csrfHandler.token_valid(request.values.get('csrf', ''), username)
+        valid = api.csrfHandler.token_valid_p(request.values.get('csrf', ''), username)
         ret = {'message': valid}
         return ret
 
@@ -126,7 +126,7 @@ class LoginHandler(Resource):
         if process_login():
             ret = {
                 'message': 'Login success',
-                'csrf':api.csrfHandler.generate_token()
+                'csrf':api.csrfHandler.generate_token(request.values.get('username', ''))
             }
             return ret
         else:
