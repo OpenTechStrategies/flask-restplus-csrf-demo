@@ -173,9 +173,6 @@ def web_secure_handler():
     return "<html><body>Secure information.</body></html>"
 
 
-## This function is run after every request for a page in /web/, but
-## not in calls to the /api/ urls.  It adds the csrf token to the
-## head.
 @app.after_request
 def add_token(response):
     """Add token to web pages if we're logged in."""
@@ -187,6 +184,10 @@ def add_token(response):
     
     # If we're not logged in, don't add the token
     if not api.csrfHandler.logged_in():
+        return response
+
+    ## If in API, don't need the token added
+    if request.path.startswith("/api"):
         return response
 
     return api.csrfHandler.add_token_to_html(response)
