@@ -87,7 +87,7 @@ First get dependencies:
 While [demo.py](demo.py) is running, you can also do
 
 ```
-  $ pipenv run  ytest test_demo.py
+  $ pipenv run pytest test_demo.py
 ```
 
 to run a series of tests that verify that
